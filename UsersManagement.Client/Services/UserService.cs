@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using UsersManagement.Shared.Models;
-using UsersManagement.Shared.UserRepository;
+using UsersManagement.Client.UserRepository;
 
 namespace UsersManagement.Client.Services
 {

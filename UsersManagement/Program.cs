@@ -2,12 +2,14 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UserManagement.Services;
 using UsersManagement.Client.Pages;
+using UsersManagement.Client.UserRepository;
 using UsersManagement.Components;
 using UsersManagement.Components.Account;
 using UsersManagement.Data;
 using UsersManagement.Services;
-using UsersManagement.Shared.UserRepository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 builder.Services.AddScoped(http => new HttpClient
 {

@@ -2,7 +2,7 @@
 @using UsersManagement.Client.Services;
 @using UsersManagement.Shared.Models
 @inject NavigationManager navigation;
-@inject IJSRuntime JsRuntime
+
 
 <h3>AddCountry</h3>
 
@@ -46,13 +46,14 @@
 
     protected async Task CreateCountry()
     {
-        navigation.NavigateTo("/users-list");
+        var result = await CountryService.AddAsync(countryobj);
+        navigation.NavigateTo("/countries-list");
     }
 
 
     public void Cancel()
     {
-        navigation.NavigateTo("/users-list");
+        navigation.NavigateTo("/countries-list");
 
     }
 }

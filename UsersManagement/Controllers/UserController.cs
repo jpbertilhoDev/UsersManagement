@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UsersManagement.Shared.Models;
-using UsersManagement.Shared.UserRepository;
+using UsersManagement.Client.UserRepository;
 
 namespace UsersManagement.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UsersManagement.Data;
 using UsersManagement.Shared.Models;
-using UsersManagement.Shared.UserRepository;
+using UsersManagement.Client.UserRepository;
 
 namespace UsersManagement.Services
 {
