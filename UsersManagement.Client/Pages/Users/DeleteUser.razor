@@ -1,0 +1,78 @@
+﻿@page "/user/delete/{id:int}"
+@using UsersManagement.Shared.Models
+@inject NavigationManager navigation;
+@rendermode InteractiveServer
+
+<h3>Delete User Details</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>First Name</th>
+                <td>@userobj.FirstName</td>
+            </tr>
+            <tr>
+                <th>Middle Name</th>
+                <td>@userobj.MiddleName</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@userobj.LastName</td>
+            </tr>
+            <tr>
+                <th>Email Address</th>
+                <td>@userobj.EmailAddress</td>
+            </tr>
+            <tr>
+                <th>User Address</th>
+                <td>@userobj.Address</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>@userobj.PhoneNumber</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>@userobj.Country</td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" @onclick="Delete">Delete Button</button>
+        <button type="button" class="btn btn-danger"> Cancel</button>
+    </div>
+</div>
+
+
+
+@code {
+
+    public User userobj { get; set; } = new();
+
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUser();
+    }
+
+    public async Task LoadUser()
+    {
+        userobj = await UserService.GetUsersByIdAsync(id);
+    }
+
+
+    protected async Task Delete()
+    {
+        var result = await UserService.DeleteUserAsync(id);
+        navigation.NavigateTo("/users-list");
+    }
+    public void Cancel()
+    {
+        navigation.NavigateTo("/users-list");
+
+    }
+}

@@ -1,0 +1,109 @@
+﻿@page "/user/edit/{id:int}"
+@using UsersManagement.Shared.Models
+@inject NavigationManager navigation;
+@rendermode InteractiveServer
+
+<h3>Update User Details</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <EditForm Model="userobj" OnValidSubmit="UpdateUser" FormName="updateuser">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name</label>
+                            <InputText for="FirstName" class="form-control" @bind-Value="@userobj.FirstName" />
+                            <ValidationMessage For="()=>userobj.FirstName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Middle Name</label>
+                            <InputText for="MiddleName" class="form-control" @bind-Value="@userobj.MiddleName" />
+                            <ValidationMessage For="()=>userobj.MiddleName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name</label>
+                            <InputText for="LastName" class="form-control" @bind-Value="@userobj.LastName" />
+                            <ValidationMessage For="()=>userobj.LastName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Email Address</label>
+                            <InputText for="EmailAddress" class="form-control" @bind-Value="@userobj.EmailAddress" />
+                            <ValidationMessage For="()=>userobj.EmailAddress" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">User Address</label>
+                            <InputText for="Address" class="form-control" @bind-Value="@userobj.Address" />
+                            <ValidationMessage For="()=>userobj.Address" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Phone Number</label>
+                            <InputText for="PhoneNumber" class="form-control" @bind-Value="@userobj.PhoneNumber" />
+                            <ValidationMessage For="()=>userobj.PhoneNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">User Country</label>
+                            <InputText for="Country" class="form-control" @bind-Value="@userobj.Country" />
+                            <ValidationMessage For="()=>userobj.Country" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Edit User</button>
+                    <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back to List</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+
+    [SupplyParameterFromForm]
+    public User userobj { get; set; } = new();
+
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUser();
+    }
+
+    public async Task LoadUser()
+    {
+        userobj = await UserService.GetUsersByIdAsync(id);
+    }
+
+
+    protected async Task UpdateUser()
+    {
+        var result = await UserService.UpdateUserAsync(userobj);
+        navigation.NavigateTo("/users-list");
+    }
+    public void Cancel()
+    {
+        navigation.NavigateTo("/users-list");
+
+    }
+
+}
+

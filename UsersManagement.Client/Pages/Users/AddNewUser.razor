@@ -1,0 +1,96 @@
+﻿@page "/add-user"
+@using UsersManagement.Client.Services;
+@using UsersManagement.Shared.Models
+@inject NavigationManager navigation;
+@inject IJSRuntime JsRuntime
+
+
+
+<h3>Add New User</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <EditForm Model="userobj" OnValidSubmit="CreateUser" FormName="addUser">
+
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name</label>
+                            <InputText for="FirstName" class="form-control" @bind-Value="@userobj.FirstName"/>
+                            <ValidationMessage For="()=>userobj.FirstName"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Middle Name</label>
+                            <InputText for="MiddleName" class="form-control" @bind-Value="@userobj.MiddleName" />
+                            <ValidationMessage For="()=>userobj.MiddleName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name</label>
+                            <InputText for="LastName" class="form-control" @bind-Value="@userobj.LastName" />
+                            <ValidationMessage For="()=>userobj.LastName" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Email Address</label>
+                            <InputText for="EmailAddress" class="form-control" @bind-Value="@userobj.EmailAddress" />
+                            <ValidationMessage For="()=>userobj.EmailAddress" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">User Address</label>
+                            <InputText for="Address" class="form-control" @bind-Value="@userobj.Address" />
+                            <ValidationMessage For="()=>userobj.Address" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Phone Number</label>
+                            <InputText for="PhoneNumber" class="form-control" @bind-Value="@userobj.PhoneNumber" />
+                            <ValidationMessage For="()=>userobj.PhoneNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">User Country</label>
+                            <InputText for="Country" class="form-control" @bind-Value="@userobj.Country" />
+                            <ValidationMessage For="()=>userobj.Country" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Save User</button>
+                    <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back to List</button>
+                </div>
+            </div>
+         </EditForm>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    public User userobj { get; set; } = new();
+
+    protected async Task CreateUser()
+    {
+        var result = await UserService.AddUserAsync(userobj);
+        navigation.NavigateTo("/users-list");
+    }
+
+    public void Cancel()
+    {
+        navigation.NavigateTo("/users-list");
+
+    }
+
+}
